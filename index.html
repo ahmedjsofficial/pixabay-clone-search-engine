@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pixiabay | Clone</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+
+</head>
+<body>
+
+	<div class="container">
+		<div class="title">
+			<h1>Pixels Clone</h1>
+		</div>
+		<form id="formSubmit">
+			<input type="search" name="" class="search" placeholder="Search something" id="Search" />
+			<!-- <button type="submit" name="submit"><i class="fab fa-searchengin"></i></button> -->
+			<input type="submit" name="submit" value="Search" class="button">
+		</form>
+		<div id="result"></div>
+	</div>
+
+
+	
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript">
+
+		// 563492ad6f917000010000018d41e25653634936846ebe34ad29f4b3
+
+
+		var form = $("#formSubmit");
+		form.submit(function(e) {
+			e.preventDefault();
+			var s = $("#Search").val();
+
+			var url = "https://api.pexels.com/v1/search?query="+s+"&per_page=5";
+			// var url = "https://api.pexels.com/v1/search?query="+s;
+			var photos;
+			var setPhotos;
+			$("#result").empty();
+			$.ajax({
+				beforeSend: function (xhr) {
+				    xhr.setRequestHeader("Authorization" , "563492ad6f917000010000018d41e25653634936846ebe34ad29f4b3");
+				},
+				method: 'GET',
+				url: url,
+				success: function (data) {
+					console.log(data);
+
+					// photos , setPhoto;
+					photos = data.photos;
+
+					for (var i=0;i<photos.length;i++) {
+						setPhotos = `<img width="300" height="350" src="${photos[i].src.small}" />`;
+						$("#result").append(setPhotos);
+					}
+
+				}
+			})
+
+		});
+
+	</script>
+</body>
+</html>
